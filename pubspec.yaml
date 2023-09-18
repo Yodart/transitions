@@ -1,0 +1,20 @@
+name: transitions
+description: Collection of custom page route transitions to enhance the user experience in your Flutter applications. These transitions offer visually appealing effects when navigating between screens.
+version: 1.0.0
+
+repository: https://github.com/Yodart/transitions
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+  flutter: '>=1.17.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
