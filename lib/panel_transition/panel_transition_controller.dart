@@ -1,16 +1,20 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:ui_library/ui_library.dart';
-
-import '../../infra.dart';
 
 /// Controller used to controls the [PanelTranstionPageBuilder]
 class PanelTranstionController {
   // ignore: public_member_api_docs
-  PanelTranstionController({required this.vsync, double? initialHeight, double? maxHeight})
-      : initialHeight = initialHeight ?? UIScale.height(50),
-        maxHeight = maxHeight ?? UIScale.deviceHeight;
+  PanelTranstionController(
+    this.context, {
+    required this.vsync,
+    double? initialHeight,
+    double? maxHeight,
+  })  : initialHeight = initialHeight ?? MediaQuery.of(context).size.height * 0.5,
+        maxHeight = maxHeight ?? MediaQuery.of(context).size.height;
+
+  /// Ticker provided by view
+  final BuildContext context;
 
   /// Ticker provided by view
   final TickerProvider vsync;
@@ -37,7 +41,11 @@ class PanelTranstionController {
   /// Initialize the controller
   void init() {
     animationController = AnimationController(
-        vsync: vsync, duration: const Duration(milliseconds: 350), lowerBound: 0, upperBound: UIScale.deviceHeight);
+      vsync: vsync,
+      duration: const Duration(milliseconds: 350),
+      lowerBound: 0,
+      upperBound: MediaQuery.of(context).size.height,
+    );
     animationController.addListener(_animationListener);
     animationController.addStatusListener(_animationStatusListener);
     animationController.animateTo(initialHeight,
@@ -71,7 +79,7 @@ class PanelTranstionController {
   }
 
   void _animationStatusListener(AnimationStatus status) {
-    if (status == AnimationStatus.completed && animationController.value == 0.0) OasisNavigator.instance.pop();
+    if (status == AnimationStatus.completed && animationController.value == 0.0) Navigator.of(context).pop();
   }
 
   /// Closes the page

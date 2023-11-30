@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 /// There are no user interactions involved on this page route.
 class SlingUpPageRouteBuilder extends PageRouteBuilder {
   // ignore: public_member_api_docs
-  SlingUpPageRouteBuilder({required this.child, required RouteSettings settings})
+  SlingUpPageRouteBuilder({required Widget child, RouteSettings? settings})
       : super(
           opaque: true,
           settings: settings,
@@ -13,9 +13,6 @@ class SlingUpPageRouteBuilder extends PageRouteBuilder {
           pageBuilder: (context, animation, __) => child,
           transitionsBuilder: handleTransitionsBuilder,
         );
-
-  /// The actual view rendered inside of the builder.
-  final Widget child;
 
   /// Handle the transition of the view. Renders a opaque layer behind the view and then
   /// wraps the view with a [SlideTransition] to perform the animation.

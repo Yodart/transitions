@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:ui_library/ui_library.dart';
 
-import '../../infra.dart';
+import '../gestures/gesture_recog_overlay.dart';
+import 'panel_transition_controller.dart';
+import 'panel_transition_page_route_builder.dart';
 
 /// It allows opening a certain page under the responsiveness animation.
 /// With slideup and slide down interactions.
 class PanelTranstionPageBuilder extends StatefulWidget {
   // ignore: public_member_api_docs
-  PanelTranstionPageBuilder({required this.builder, double? initialHeight, double? maxHeight})
-      : initialHeight = initialHeight ?? UIScale.height(50),
-        maxHeight = maxHeight ?? UIScale.deviceHeight;
+  PanelTranstionPageBuilder(
+    this.context, {
+    super.key,
+    required this.builder,
+    double? initialHeight,
+    double? maxHeight,
+  })  : initialHeight = initialHeight ?? MediaQuery.of(context).size.height * 0.5,
+        maxHeight = maxHeight ?? MediaQuery.of(context).size.height;
+
+  /// Current context
+  final BuildContext context;
 
   /// Initial page height
   final double initialHeight;
@@ -32,6 +41,7 @@ class _PanelTranstionPageBuilderState extends State<PanelTranstionPageBuilder> w
   void initState() {
     super.initState();
     _controller = PanelTranstionController(
+      context,
       vsync: this,
       initialHeight: widget.initialHeight,
       maxHeight: widget.maxHeight,
@@ -49,7 +59,8 @@ class _PanelTranstionPageBuilderState extends State<PanelTranstionPageBuilder> w
   Widget build(BuildContext context) {
     final Widget page = ClipRRect(
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(UIScale.width(7.5)), topRight: Radius.circular(UIScale.width(7.5))),
+            topLeft: Radius.circular(MediaQuery.of(context).size.width * 0.075),
+            topRight: Radius.circular(MediaQuery.of(context).size.width * 0.075)),
         child: _page);
 
     return WillPopScope(
@@ -63,14 +74,19 @@ class _PanelTranstionPageBuilderState extends State<PanelTranstionPageBuilder> w
           AnimatedBuilder(
             animation: _controller.animationController,
             builder: (_, child) {
-              final double targetHeight = UIScale.deviceHeight - _controller.animationController.value;
-              final double targetOpacity = 1 - (targetHeight / UIScale.deviceHeight);
+              final double targetHeight = MediaQuery.of(context).size.height - _controller.animationController.value;
+              final double targetOpacity = 1 - (targetHeight / MediaQuery.of(context).size.height);
               return Stack(
                 children: [
                   Container(color: Colors.black.withOpacity(targetOpacity)),
                   Positioned(
-                      top: targetHeight,
-                      child: Container(height: UIScale.deviceHeight, width: UIScale.deviceWidth, child: page)),
+                    top: targetHeight,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: page,
+                    ),
+                  ),
                 ],
               );
             },
