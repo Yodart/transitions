@@ -43,7 +43,7 @@ class PanelTranstionController {
       vsync: vsync,
       duration: const Duration(milliseconds: 350),
       lowerBound: 0,
-      upperBound: MediaQuery.of(context).size.height,
+      upperBound: maxHeight,
     );
     animationController.addListener(_animationListener);
     animationController.addStatusListener(_animationStatusListener);
