@@ -8,10 +8,9 @@ class PanelTranstionController {
   PanelTranstionController(
     this.context, {
     required this.vsync,
-    double? initialHeight,
-    double? maxHeight,
-  })  : initialHeight = initialHeight ?? MediaQuery.of(context).size.height * 0.5,
-        maxHeight = maxHeight ?? MediaQuery.of(context).size.height;
+    required this.initialHeight,
+    required this.maxHeight,
+  });
 
   /// Ticker provided by view
   final BuildContext context;

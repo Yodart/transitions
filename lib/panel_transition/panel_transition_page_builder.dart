@@ -8,14 +8,13 @@ import 'panel_transition_page_route_builder.dart';
 /// With slideup and slide down interactions.
 class PanelTranstionPageBuilder extends StatefulWidget {
   // ignore: public_member_api_docs
-  PanelTranstionPageBuilder(
+  const PanelTranstionPageBuilder(
     this.context, {
     super.key,
     required this.builder,
-    double? initialHeight,
-    double? maxHeight,
-  })  : initialHeight = initialHeight ?? MediaQuery.of(context).size.height * 0.5,
-        maxHeight = maxHeight ?? MediaQuery.of(context).size.height;
+    required this.initialHeight,
+    required this.maxHeight,
+  });
 
   /// Current context
   final BuildContext context;
@@ -40,15 +39,13 @@ class _PanelTranstionPageBuilderState extends State<PanelTranstionPageBuilder> w
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _controller = PanelTranstionController(
-        context,
-        vsync: this,
-        initialHeight: widget.initialHeight,
-        maxHeight: widget.maxHeight,
-      )..init();
-      _page = widget.builder(_controller);
-    });
+    _controller = PanelTranstionController(
+      context,
+      vsync: this,
+      initialHeight: widget.initialHeight,
+      maxHeight: widget.maxHeight,
+    )..init();
+    _page = widget.builder(_controller);
   }
 
   @override

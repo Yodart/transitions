@@ -9,24 +9,24 @@ typedef PanelTranstionBuilder = Widget Function(PanelTranstionController);
 /// Custom [PageRouteBuilder] to use with [PanelTranstion]
 class PanelTranstionPageRouteBuilder extends PageRouteBuilder {
   // ignore: public_member_api_docs
-  PanelTranstionPageRouteBuilder(
-    BuildContext context, {
+  PanelTranstionPageRouteBuilder({
     required PanelTranstionBuilder builder,
     RouteSettings? settings,
     double? initialHeight,
     double? maxHeight,
   }) : super(
-            opaque: false,
-            settings: settings,
-            transitionDuration: const Duration(milliseconds: 50),
-            reverseTransitionDuration: const Duration(milliseconds: 50),
-            transitionsBuilder: (_, __, ___, child) => child,
-            pageBuilder: (context, animation, __) {
-              return PanelTranstionPageBuilder(
-                context,
-                initialHeight: initialHeight,
-                maxHeight: maxHeight,
-                builder: builder,
-              );
-            });
+          opaque: false,
+          settings: settings,
+          transitionDuration: const Duration(milliseconds: 50),
+          reverseTransitionDuration: const Duration(milliseconds: 50),
+          transitionsBuilder: (_, __, ___, child) => child,
+          pageBuilder: (context, animation, __) {
+            return PanelTranstionPageBuilder(
+              context,
+              initialHeight: initialHeight ?? MediaQuery.of(context).size.height * 0.5,
+              maxHeight: maxHeight ?? MediaQuery.of(context).size.height,
+              builder: builder,
+            );
+          },
+        );
 }
