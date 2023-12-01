@@ -40,13 +40,15 @@ class _PanelTranstionPageBuilderState extends State<PanelTranstionPageBuilder> w
   @override
   void initState() {
     super.initState();
-    _controller = PanelTranstionController(
-      context,
-      vsync: this,
-      initialHeight: widget.initialHeight,
-      maxHeight: widget.maxHeight,
-    )..init();
-    _page = widget.builder(_controller);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _controller = PanelTranstionController(
+        context,
+        vsync: this,
+        initialHeight: widget.initialHeight,
+        maxHeight: widget.maxHeight,
+      )..init();
+      _page = widget.builder(_controller);
+    });
   }
 
   @override
